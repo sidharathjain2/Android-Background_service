@@ -1,27 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_background/app_retain_widget.dart';
 import 'package:flutter_background/background_main.dart';
-import 'package:boot_completed/boot_completed.dart' as boot_completed;
 import 'package:path_provider/path_provider.dart';
 import 'usage_service.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 
-  boot_completed.setBootCompletedFunction(startserviceonboot);
-  var channel = const MethodChannel('com.example/background_service');
-  var callbackHandle = PluginUtilities.getCallbackHandle(backgroundMain);
-  channel.invokeMethod('startService', callbackHandle.toRawHandle());
-
-  Service.instance().getUsageStats();
-}
-
-void startserviceonboot() {
   var channel = const MethodChannel('com.example/background_service');
   var callbackHandle = PluginUtilities.getCallbackHandle(backgroundMain);
   channel.invokeMethod('startService', callbackHandle.toRawHandle());
