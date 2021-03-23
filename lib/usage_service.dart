@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_usage/app_usage.dart';
+import 'package:cron/cron.dart';
 // ignore: unused_import
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +16,9 @@ class Service {
   static final _instance = Service._internal();
 
   void getUsageStats() async {
-    Stream.periodic(Duration(minutes: 5)).listen((_) async {
-      var date = DateTime.now();
+    final cron = Cron();
+    cron.schedule(Schedule.parse('0 * * * *'), () async {
+      // var date = DateTime.now();
       //if (date.hour >= 22 || date.hour <= 9) {
       List usageList = [];
       List difference = [];
